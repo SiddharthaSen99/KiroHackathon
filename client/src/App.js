@@ -6,7 +6,8 @@ import RoomCreated from './components/RoomCreated';
 import soundManager from './utils/soundManager';
 import './App.css';
 
-const socket = io(process.env.NODE_ENV === 'production' ? 'https://kirohackathon-production.up.railway.app' : 'http://localhost:5000');
+//const socket = io(process.env.NODE_ENV === 'production' ? 'https://kirohackathon-production.up.railway.app' : 'http://localhost:5000');
+const socket = io(process.env.NODE_ENV === 'production' ? 'https://imprompt.to' : 'http://localhost:5000');
 
 function App() {
   const [gameState, setGameState] = useState('lobby'); // lobby, room_created, room, playing
