@@ -79,6 +79,36 @@ body {
   position: relative;
 }
 
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 24px;
+  color: #fff;
+  text-shadow: 
+    3px 3px 0 #000,
+    0 0 10px #fff,
+    0 0 20px #fff;
+  background: linear-gradient(45deg, #00ff41, #66ff66);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding: 8px 12px;
+  border: 3px solid #fff;
+  border-radius: 8px;
+  box-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.5),
+    inset 0 0 10px rgba(0, 255, 65, 0.2);
+  animation: logo-glow 3s ease-in-out infinite alternate;
+}
+
 .App-header::after {
   content: '';
   position: absolute;
@@ -99,7 +129,22 @@ body {
   color: #fff;
   text-shadow: 2px 2px 0 #000;
   position: relative;
-  z-index: 1;
+  z-index: 2;
+}
+
+@keyframes logo-glow {
+  from {
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.5),
+      inset 0 0 10px rgba(0, 255, 65, 0.2);
+    transform: scale(1);
+  }
+  to {
+    box-shadow: 
+      0 0 25px rgba(255, 255, 255, 0.8),
+      inset 0 0 15px rgba(0, 255, 65, 0.4);
+    transform: scale(1.05);
+  }
 }
 
 /* Retro Button Styles */

@@ -202,7 +202,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>AI Prompt Guesser</h1>
+        <div className="header-content">
+          <div className="logo">I!</div>
+          <h1>AI Prompt Guesser</h1>
+        </div>
       </header>
       
       {gameState === 'lobby' && (
