@@ -17,8 +17,8 @@
 ### 2. Environment Variables
 In Railway dashboard → Variables:
 - [ ] `NODE_ENV` = `production`
-- [ ] `AI_PROVIDER` = `together`
-- [ ] `TOGETHER_API_KEY` = `your_actual_together_api_key`
+- [ ] `AI_PROVIDER` = `replicate`
+- [ ] `REPLICATE_API_KEY` = `your_actual_replicate_api_key`
 
 ### 3. Custom Domain
 - [ ] Railway dashboard → Settings → Domains
