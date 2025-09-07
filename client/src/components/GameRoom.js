@@ -3,8 +3,9 @@ import PromptInput from './PromptInput';
 import GuessInput from './GuessInput';
 import PlayerList from './PlayerList';
 import GameImage from './GameImage';
+import soundManager from '../utils/soundManager';
 
-function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, socket, isPlaying = false, initialGameData = null }) {
+function GameRoom({ players, spectators = [], currentPlayer, roomId, onToggleReady, allReady, socket, isPlaying = false, initialGameData = null, onUpdatePlayers, isSpectator = false, maxRoundsFromParent = 5 }) {
   const [gameData, setGameData] = useState(initialGameData || {
     currentPromptGiver: null,
     currentImage: '',
@@ -13,54 +14,71 @@ function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, soc
     promptTimeRemaining: 30,
     round: 0,
     maxRounds: 5,
-    gameState: 'waiting'
+    gameState: 'waiting',
+    currentTurnIndex: 0,
+    turnsCompletedInRound: 0,
+    totalPlayersInRound: players?.length || 0
   });
   const [guesses, setGuesses] = useState([]);
+  const [maxRounds, setMaxRounds] = useState(maxRoundsFromParent);
 
   // Update game data when initial data is provided
   useEffect(() => {
     if (initialGameData) {
-      console.log('Setting initial game data:', initialGameData);
-      setGameData(initialGameData);
+      setGameData(prev => ({
+        ...prev,
+        ...initialGameData
+      }));
     }
   }, [initialGameData]);
 
+  // Update maxRounds when prop changes
   useEffect(() => {
-    console.log('GameRoom useEffect - isPlaying:', isPlaying);
-    
+    console.log('GameRoom: maxRoundsFromParent changed to:', maxRoundsFromParent);
+    setMaxRounds(maxRoundsFromParent);
+    setGameData(prev => ({
+      ...prev,
+      maxRounds: maxRoundsFromParent
+    }));
+  }, [maxRoundsFromParent]);
+
+  useEffect(() => {
     // Clean up listeners (but NOT game_started unless we're playing)
-    socket.off('next_round');
+    socket.off('next_turn');
     socket.off('prompt_submitted');
     socket.off('guess_submitted');
     socket.off('round_ended');
     socket.off('game_finished');
+    socket.off('game_state_sync');
     socket.off('timer_update');
 
     // Only register game_started listener if we're actually playing
     if (isPlaying) {
-      console.log('GameRoom: Registering game_started listener');
       // Only clean up game_started if we're going to register it
       socket.off('game_started');
-      
+
       socket.on('game_started', (data) => {
-        console.log('GameRoom received game_started:', data);
+        soundManager.playGameStart();
         setGameData(prev => ({
           ...prev,
           currentPromptGiver: data.currentPromptGiver,
           round: data.round,
-          gameState: 'waiting_for_prompt'
+          gameState: 'waiting_for_prompt',
+          currentTurnIndex: data.currentTurnIndex,
+          turnsCompletedInRound: data.turnsCompletedInRound,
+          totalPlayersInRound: data.totalPlayersInRound
         }));
       });
-    } else {
-      console.log('GameRoom: NOT registering game_started listener (not playing)');
     }
 
-    socket.on('next_round', (data) => {
-      console.log('Next round starting:', data);
-      console.log('New prompt giver:', data.currentPromptGiver);
-      console.log('Current player ID:', currentPlayer?.id);
-      console.log('Should show prompt input:', data.currentPromptGiver === currentPlayer?.id);
-      
+
+
+    socket.on('next_turn', (data) => {
+      // Update players with current scores
+      if (onUpdatePlayers && data.players) {
+        onUpdatePlayers(data.players);
+      }
+
       setGameData(prev => ({
         ...prev,
         currentPromptGiver: data.currentPromptGiver,
@@ -70,40 +88,36 @@ function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, soc
         currentImage: '',
         currentPrompt: '',
         timeRemaining: 30,
-        roundResults: null
+        roundResults: null,
+        currentTurnIndex: data.currentTurnIndex,
+        turnsCompletedInRound: data.turnsCompletedInRound,
+        totalPlayersInRound: data.totalPlayersInRound
       }));
       setGuesses([]);
     });
 
     socket.on('prompt_submitted', (data) => {
-      console.log('Prompt submitted event received:', data);
-      setGameData(prev => {
-        const newGameData = {
-          ...prev,
-          currentImage: data.imageUrl,
-          gameState: 'guessing',
-          timeRemaining: data.timeRemaining || 30
-        };
-        console.log('Updated game data:', newGameData);
-        return newGameData;
-      });
+      soundManager.playPromptSubmitted();
+      setGameData(prev => ({
+        ...prev,
+        currentImage: data.imageUrl,
+        gameState: 'guessing',
+        timeRemaining: data.timeRemaining || 30
+      }));
     });
 
     socket.on('guess_submitted', (data) => {
-      console.log('Guess submitted event received:', data);
-      setGuesses(prev => {
-        const newGuesses = [...prev, data];
-        console.log('Updated guesses:', newGuesses);
-        return newGuesses;
-      });
+      soundManager.playGuessSubmitted();
+      setGuesses(prev => [...prev, data]);
     });
 
     socket.on('round_ended', (data) => {
-      console.log('Round ended:', data);
-      console.log('Guesses received:', data.guesses);
-      console.log('Guesses type:', typeof data.guesses);
-      console.log('Guesses is array:', Array.isArray(data.guesses));
-      
+      soundManager.playRoundEnd();
+      // Update players with new scores
+      if (onUpdatePlayers && data.players) {
+        onUpdatePlayers(data.players);
+      }
+
       setGameData(prev => ({
         ...prev,
         currentPrompt: data.originalPrompt,
@@ -116,10 +130,35 @@ function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, soc
     });
 
     socket.on('game_finished', (data) => {
+      console.log('Game finished event received:', data);
+      soundManager.playGameEnd();
       setGameData(prev => ({
         ...prev,
-        gameState: 'finished'
+        gameState: 'finished',
+        finalPlayers: data.players,
+        winner: data.winner
       }));
+    });
+
+    // Handle game state synchronization for reconnecting players
+    socket.on('game_state_sync', (data) => {
+      console.log('Received game state sync:', data);
+      setGameData(prev => ({
+        ...prev,
+        ...data,
+        // Preserve any existing round results if not provided
+        roundResults: data.roundResults || prev.roundResults
+      }));
+      
+      // Update players if provided
+      if (data.players && onUpdatePlayers) {
+        onUpdatePlayers(data.players);
+      }
+      
+      // If there are guesses, update the guesses state
+      if (data.guesses) {
+        setGuesses(data.guesses);
+      }
     });
 
     socket.on('timer_update', (data) => {
@@ -127,6 +166,11 @@ function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, soc
         ...prev,
         timeRemaining: data.timeRemaining
       }));
+      
+      // Play countdown sound for last 5 seconds
+      if (data.timeRemaining <= 5 && data.timeRemaining > 0) {
+        soundManager.playCountdown(data.timeRemaining);
+      }
     });
 
     socket.on('prompt_timer_update', (data) => {
@@ -134,33 +178,30 @@ function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, soc
         ...prev,
         promptTimeRemaining: data.timeRemaining
       }));
+      
+      // Play countdown sound for last 5 seconds during prompt phase
+      if (data.timeRemaining <= 5 && data.timeRemaining > 0) {
+        soundManager.playCountdown(data.timeRemaining);
+      }
     });
 
     return () => {
-      console.log('GameRoom cleanup - isPlaying:', isPlaying);
       // Only clean up game_started if we registered it (when isPlaying is true)
       if (isPlaying) {
         socket.off('game_started');
       }
-      socket.off('next_round');
+      socket.off('next_turn');
       socket.off('prompt_submitted');
       socket.off('guess_submitted');
       socket.off('round_ended');
       socket.off('game_finished');
+      socket.off('game_state_sync');
       socket.off('timer_update');
       socket.off('prompt_timer_update');
     };
   }, [socket, isPlaying]);
 
   const isCurrentPlayerPromptGiver = () => {
-    console.log('🔍 Checking if current player is prompt giver:');
-    console.log('  currentPlayer:', currentPlayer);
-    console.log('  currentPlayer.id:', currentPlayer?.id);
-    console.log('  gameData.currentPromptGiver:', gameData.currentPromptGiver);
-    console.log('  socket.id:', socket.id);
-    console.log('  Match with currentPlayer.id:', currentPlayer && gameData.currentPromptGiver === currentPlayer.id);
-    console.log('  Match with socket.id:', gameData.currentPromptGiver === socket.id);
-    
     // Try both currentPlayer.id and socket.id
     return gameData.currentPromptGiver === socket.id || (currentPlayer && gameData.currentPromptGiver === currentPlayer.id);
   };
@@ -169,6 +210,17 @@ function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, soc
   const currentPlayerData = players.find(p => p.id === currentPlayer?.id);
   const isCurrentPlayerReady = currentPlayerData?.isReady || false;
   const readyCount = players.filter(p => p.isReady).length;
+  const isRoomCreator = currentPlayerData?.isRoomCreator || false;
+
+  const handleMaxRoundsChange = (newMaxRounds) => {
+    console.log('GameRoom: handleMaxRoundsChange called with:', newMaxRounds, 'current maxRounds:', maxRounds);
+    if (isRoomCreator && !allReady && newMaxRounds !== maxRounds) {
+      console.log('GameRoom: Emitting set_max_rounds event');
+      socket.emit('set_max_rounds', { roomId, maxRounds: newMaxRounds });
+    } else {
+      console.log('GameRoom: Not emitting because:', { isRoomCreator, allReady, sameValue: newMaxRounds === maxRounds });
+    }
+  };
 
   if (!isPlaying) {
     return (
@@ -176,27 +228,72 @@ function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, soc
         <div className="room-header">
           <h2>Room: {roomId}</h2>
           <p>Players: {players.length}</p>
+          {spectators.length > 0 && <p>Spectators: {spectators.length}</p>}
           <p>Ready: {readyCount}/{players.length}</p>
         </div>
-        
-        <PlayerList players={players} showReady={true} />
-        
-        {canStartGame && !allReady && (
-          <button 
-            onClick={onToggleReady} 
+
+        <PlayerList players={players} spectators={spectators} showReady={true} />
+
+        {!isSpectator && isRoomCreator && !allReady && (
+          <div className="game-settings">
+            <div className="rounds-selector">
+              <label htmlFor="maxRounds">Number of Rounds:</label>
+              <div className="rounds-controls">
+                <button
+                  className="rounds-btn decrease"
+                  onClick={() => handleMaxRoundsChange(Math.max(1, maxRounds - 1))}
+                  disabled={maxRounds <= 1}
+                >
+                  -
+                </button>
+                <span className="rounds-display">{maxRounds}</span>
+                <button
+                  className="rounds-btn increase"
+                  onClick={() => handleMaxRoundsChange(Math.min(10, maxRounds + 1))}
+                  disabled={maxRounds >= 10}
+                >
+                  +
+                </button>
+              </div>
+              <div className="rounds-info">
+                <small>🎮 As room creator, you can set 1-10 rounds</small>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {!isSpectator && !isRoomCreator && !allReady && (
+          <div className="game-settings">
+            <div className="rounds-display-only">
+              <span>Rounds: {maxRounds}</span>
+              <small>🎯 Set by room creator</small>
+            </div>
+          </div>
+        )}
+
+        {!isSpectator && canStartGame && !allReady && (
+          <button
+            onClick={onToggleReady}
             className={`ready-btn ${isCurrentPlayerReady ? 'ready' : 'not-ready'}`}
           >
             {isCurrentPlayerReady ? 'Not Ready' : 'Ready'}
           </button>
         )}
-        
+
+        {isSpectator && (
+          <div className="spectator-message">
+            <p>👁️ You are watching as a spectator</p>
+            <p>Waiting for players to start the game...</p>
+          </div>
+        )}
+
         {allReady && (
           <div className="starting-message">
             <p>All players ready! Starting game...</p>
             <div className="loading-spinner"></div>
           </div>
         )}
-        
+
         {!canStartGame && (
           <p className="waiting-message">
             Waiting for at least 2 players to start...
@@ -210,47 +307,117 @@ function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, soc
     <div className="game-room playing">
       <div className="game-header">
         <div className="round-info">
-          <span>Round {gameData.round}</span>
-          <span className="timer">Time: {gameData.timeRemaining}s</span>
+          <span>
+            Round {gameData.round} of {gameData.maxRounds}
+            {gameData.totalPlayersInRound > 0 && (
+              <span className="turn-info"> - Turn {(gameData.turnsCompletedInRound || 0) + 1} of {gameData.totalPlayersInRound}</span>
+            )}
+          </span>
+        </div>
+        <div className="header-right">
+          <span className={`timer ${
+            (gameData.gameState === 'waiting_for_prompt' ? gameData.promptTimeRemaining : gameData.timeRemaining) <= 5 
+              ? 'countdown-warning' 
+              : ''
+          }`}>
+            Time: {gameData.gameState === 'waiting_for_prompt' ? gameData.promptTimeRemaining : gameData.timeRemaining}s
+          </span>
+          <div className="sound-controls">
+            <button
+              className={`sound-toggle ${soundManager.isEnabled() ? 'enabled' : 'disabled'}`}
+              onClick={() => soundManager.setEnabled(!soundManager.isEnabled())}
+              title={soundManager.isEnabled() ? 'Disable sounds' : 'Enable sounds'}
+            >
+              {soundManager.isEnabled() ? '🔊' : '🔇'}
+            </button>
+          </div>
         </div>
       </div>
-      
+
       <div className="game-content">
         <div className="left-panel">
-          <PlayerList players={players} showScores={true} />
-        </div>
-        
-        <div className="center-panel">
-          {/* Debug info */}
-          <div style={{background: 'rgba(0,0,0,0.3)', padding: '10px', marginBottom: '10px', fontSize: '8px'}}>
-            <div>Game State: {gameData.gameState}</div>
-            <div>Current Player: {currentPlayer?.name}</div>
-            <div>Is Prompt Giver: {isCurrentPlayerPromptGiver() ? 'YES' : 'NO'}</div>
-            <div>Round: {gameData.round}</div>
-            <div>Prompt Giver ID: {gameData.currentPromptGiver}</div>
-          </div>
-          
-          {gameData.gameState === 'waiting_for_prompt' && isCurrentPlayerPromptGiver() && (
-            <PromptInput socket={socket} roomId={roomId} />
-          )}
-          
-          {gameData.gameState === 'waiting_for_prompt' && !isCurrentPlayerPromptGiver() && (
-            <div className="waiting-prompt">
-              <p>Waiting for prompt giver to submit their prompt...</p>
+          <PlayerList players={players} spectators={spectators} showScores={true} />
+          {isSpectator && (
+            <div className="spectator-indicator">
+              <p>👁️ Spectating</p>
             </div>
           )}
-          
+        </div>
+
+        <div className="center-panel">
+
+          {gameData.gameState === 'waiting_for_prompt' && !isSpectator && isCurrentPlayerPromptGiver() && (
+            <PromptInput socket={socket} roomId={roomId} />
+          )}
+
+          {gameData.gameState === 'waiting_for_prompt' && (!isCurrentPlayerPromptGiver() || isSpectator) && (
+            <div className="waiting-prompt">
+              <p>Waiting for prompt giver to submit their prompt...</p>
+              {isSpectator && <p className="spectator-note">👁️ You are spectating this game</p>}
+            </div>
+          )}
+
           {gameData.currentImage && (
             <GameImage imageUrl={gameData.currentImage} />
           )}
-          
+
+          {gameData.gameState === 'finished' && (
+            <div className="game-finished">
+              <div className="game-complete-header">
+                <h2>🎉 Game Complete! 🎉</h2>
+                <p>All {gameData.maxRounds} rounds finished!</p>
+              </div>
+
+              {(() => {
+                // Use finalPlayers from game data if available, otherwise fall back to sorted players
+                const sortedPlayers = gameData.finalPlayers || [...players].sort((a, b) => b.score - a.score);
+                const winner = gameData.winner || sortedPlayers[0];
+                const hasWinner = sortedPlayers.length > 0;
+
+                return (
+                  <>
+                    {hasWinner && (
+                      <div className="winner-announcement">
+                        <h3>🏆 Winner: {winner.name}! 🏆</h3>
+                        <p className="winner-score">{winner.score} points</p>
+                      </div>
+                    )}
+
+                    <div className="final-rankings">
+                      <h4>Final Rankings:</h4>
+                      <div className="rankings-list">
+                        {sortedPlayers.map((player, index) => (
+                          <div key={player.id} className={`ranking-item ${index === 0 ? 'first-place' : index === 1 ? 'second-place' : index === 2 ? 'third-place' : ''}`}>
+                            <div className="rank-position">
+                              {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`}
+                            </div>
+                            <div className="player-info">
+                              <span className="player-name">{player.name}</span>
+                              <span className="player-score">{player.score} points</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="game-stats">
+                      <p>Thanks for playing! 🎨</p>
+                      <p>Total rounds played: {gameData.maxRounds}</p>
+                      <p>Players: {players.length}</p>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+          )}
+
           {gameData.gameState === 'round_results' && gameData.roundResults && (
             <div className="round-results">
-              <h3>Round {gameData.roundResults.round} Results</h3>
+              <h3>Round {gameData.roundResults.round} of {gameData.maxRounds} Results</h3>
               <div className="original-prompt">
                 <h4>Original Prompt: "{gameData.roundResults.originalPrompt}"</h4>
               </div>
-              
+
               <div className="guesses-results">
                 <h4>Guesses & Scores:</h4>
                 {gameData.roundResults.guesses?.length > 0 ? (
@@ -269,46 +436,37 @@ function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, soc
                   <p className="no-guesses">No guesses were submitted this round!</p>
                 )}
               </div>
-              
+
               <div className="next-round-info">
-                <p>Next round starts in a few seconds...</p>
-                {gameData.round < gameData.maxRounds && (
+                <p>Next turn starts in a few seconds...</p>
+                {gameData.round <= gameData.maxRounds && (
                   <p>Next prompt giver: {players.find(p => p.id === gameData.currentPromptGiver)?.name}</p>
                 )}
               </div>
             </div>
           )}
-          
-          {gameData.gameState === 'finished' && (
-            <div className="game-finished">
-              <h2>Game Finished!</h2>
-              <div className="final-scores">
-                {players
-                  .sort((a, b) => b.score - a.score)
-                  .map((player, index) => (
-                    <div key={player.id} className={`final-score ${index === 0 ? 'winner' : ''}`}>
-                      <span>{index + 1}. {player.name}</span>
-                      <span>{player.score} points</span>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
         </div>
-        
+
         <div className="right-panel">
-          {gameData.gameState === 'guessing' && !isCurrentPlayerPromptGiver() && (
-            <GuessInput 
-              socket={socket} 
-              roomId={roomId} 
+          {gameData.gameState === 'guessing' && !isSpectator && !isCurrentPlayerPromptGiver() && (
+            <GuessInput
+              socket={socket}
+              roomId={roomId}
               timeRemaining={gameData.timeRemaining}
               currentPlayer={currentPlayer}
             />
           )}
-          
+
+          {gameData.gameState === 'guessing' && isSpectator && (
+            <div className="spectator-guessing">
+              <p>👁️ Spectating</p>
+              <p>Watch the players guess!</p>
+            </div>
+          )}
+
           {gameData.gameState === 'guessing' && (
             <div className="guesses-list">
-              <h4>Guesses ({guesses.length}):</h4>
+              <h4>{isCurrentPlayerPromptGiver() ? `🧠 Guesses (${guesses.length}):` : `Guesses (${guesses.length}):`}</h4>
               {guesses.length > 0 ? (
                 <div className="guesses-container">
                   {guesses.map((guess, index) => (
@@ -320,8 +478,17 @@ function GameRoom({ players, currentPlayer, roomId, onToggleReady, allReady, soc
                 </div>
               ) : (
                 <div className="no-guesses">
-                  <p>No guesses yet...</p>
-                  <p>Be the first to guess!</p>
+                  {isCurrentPlayerPromptGiver() ? (
+                    <>
+                      <p>🎯 Watch the minds at work...</p>
+                      <p>See how close they get to your vision!</p>
+                    </>
+                  ) : (
+                    <>
+                      <p>No guesses yet...</p>
+                      <p>Be the first to guess!</p>
+                    </>
+                  )}
                 </div>
               )}
             </div>

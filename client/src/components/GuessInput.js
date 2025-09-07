@@ -35,15 +35,20 @@ function GuessInput({ socket, roomId, timeRemaining, currentPlayer }) {
       </div>
       
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={guess}
-          onChange={(e) => setGuess(e.target.value)}
-          placeholder="Enter your guess..."
-          maxLength={50}
-          disabled={isSubmitting || timeRemaining <= 0}
-          className="guess-input"
-        />
+        <div className="input-with-counter">
+          <input
+            type="text"
+            value={guess}
+            onChange={(e) => setGuess(e.target.value)}
+            placeholder="Enter your guess..."
+            maxLength={20}
+            disabled={isSubmitting || timeRemaining <= 0}
+            className="guess-input"
+          />
+          <div className="char-count">
+            {guess.length}/20 characters
+          </div>
+        </div>
         <button 
           type="submit" 
           disabled={!guess.trim() || isSubmitting || timeRemaining <= 0}
@@ -55,6 +60,7 @@ function GuessInput({ socket, roomId, timeRemaining, currentPlayer }) {
       
       <div className="guess-tips">
         <p>💡 You can submit multiple guesses! Keep trying different words.</p>
+        <p>📝 Maximum 20 characters per guess - keep it short!</p>
       </div>
     </div>
   );
