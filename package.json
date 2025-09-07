@@ -7,7 +7,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon server/index.js",
     "client": "cd client && npm start",
-    "build": "cd client && npm run build",
+    "build": "npm run install-client && cd client && npm run build",
+    "install-client": "cd client && npm install",
     "install-all": "npm install && cd client && npm install",
     "start": "node server/index.js",
     "heroku-postbuild": "npm run install-all && npm run build"
@@ -26,5 +27,9 @@
   "devDependencies": {
     "concurrently": "^8.2.2",
     "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }

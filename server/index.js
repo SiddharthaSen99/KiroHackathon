@@ -19,7 +19,7 @@ const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
         origin: process.env.NODE_ENV === 'production' 
-            ? ["https://imprompt.to", "https://www.imprompt.to"] 
+            ? ["https://kirohackathon-production.up.railway.app", "https://imprompt.to", "https://www.imprompt.to"] 
             : "http://localhost:3000",
         methods: ["GET", "POST"],
         credentials: true
@@ -28,7 +28,7 @@ const io = socketIo(server, {
 
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' 
-        ? ["https://imprompt.to", "https://www.imprompt.to"] 
+        ? ["https://kirohackathon-production.up.railway.app", "https://imprompt.to", "https://www.imprompt.to"] 
         : "http://localhost:3000",
     credentials: true
 }));
