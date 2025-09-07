@@ -8,6 +8,7 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const aiService = require('./aiService');
 const costTracker = require('./costTracker');
+const analytics = require('./analytics');
 
 // Debug environment variables
 console.log('Current working directory:', process.cwd());
@@ -57,6 +58,16 @@ app.get('/api/health', (req, res) => {
 // Cost monitoring endpoint
 app.get('/api/costs', (req, res) => {
     res.json(costTracker.getUsageStats());
+});
+
+// Analytics endpoint
+app.get('/api/analytics', (req, res) => {
+    const stats = analytics.getStats();
+    res.json({
+        ...stats,
+        activeRooms: rooms.size,
+        totalActivePlayers: Array.from(rooms.values()).reduce((sum, room) => sum + room.players.size, 0)
+    });
 });
 
 // Game state
@@ -317,6 +328,9 @@ io.on('connection', (socket) => {
             maxRounds: room.maxRounds,
             isCreator: true
         });
+
+        // Track room creation
+        analytics.trackPlayerJoin(roomId, room.players.size);
     });
 
     socket.on('join_room', ({ roomId, playerName }) => {
@@ -507,6 +521,9 @@ io.on('connection', (socket) => {
                         console.log('Sockets in room:', io.sockets.adapter.rooms.get(roomId));
                         io.to(roomId).emit('game_started', gameStartedData);
                         console.log('game_started event emitted successfully');
+
+                        // Track game start
+                        analytics.trackGameStart(room.players.size, roomId);
 
                         // Start prompt timer
                         room.startPromptTimer();

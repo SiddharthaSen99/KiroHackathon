@@ -11,7 +11,7 @@
 
 body {
   font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
+  font-size: 18px;
   line-height: 1.6;
   background: #0f0f23;
   background-image:
@@ -52,7 +52,7 @@ body {
 }
 
 .title-main {
-  font-size: 24px;
+  font-size: 32px;
   color: #00ff41;
   letter-spacing: 3px;
   margin: 0 0 8px 0;
@@ -60,7 +60,7 @@ body {
 }
 
 .title-subtitle {
-  font-size: 8px;
+  font-size: 12px;
   color: #00ff41;
   opacity: 0.8;
   letter-spacing: 1px;
@@ -90,9 +90,9 @@ body {
 
 .logo {
   font-family: 'Press Start 2P', monospace;
-  font-size: 24px;
+  font-size: 36px;
   color: #fff;
-  text-shadow: 
+  text-shadow:
     3px 3px 0 #000,
     0 0 10px #fff,
     0 0 20px #fff;
@@ -100,13 +100,15 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  padding: 8px 12px;
+  padding: 4px 8px;
   border: 3px solid #fff;
   border-radius: 8px;
-  box-shadow: 
+  box-shadow:
     0 0 15px rgba(255, 255, 255, 0.5),
     inset 0 0 10px rgba(0, 255, 65, 0.2);
   animation: logo-glow 3s ease-in-out infinite alternate;
+  display: inline-block;
+  margin-right: 8px;
 }
 
 .App-header::after {
@@ -125,7 +127,7 @@ body {
 
 .App-header h1 {
   margin: 0;
-  font-size: 16px;
+  font-size: 36px;
   color: #fff;
   text-shadow: 2px 2px 0 #000;
   position: relative;
@@ -134,13 +136,14 @@ body {
 
 @keyframes logo-glow {
   from {
-    box-shadow: 
+    box-shadow:
       0 0 15px rgba(255, 255, 255, 0.5),
       inset 0 0 10px rgba(0, 255, 65, 0.2);
     transform: scale(1);
   }
+
   to {
-    box-shadow: 
+    box-shadow:
       0 0 25px rgba(255, 255, 255, 0.8),
       inset 0 0 15px rgba(0, 255, 65, 0.4);
     transform: scale(1.05);
@@ -150,8 +153,8 @@ body {
 /* Retro Button Styles */
 .retro-btn {
   font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-  padding: 12px 16px;
+  font-size: 12px;
+  padding: 16px 20px;
   border: 3px solid #333;
   background: linear-gradient(45deg, #4CAF50, #45a049);
   color: #fff;
@@ -237,7 +240,7 @@ body {
 
 .lobby-container h2 {
   margin-bottom: 20px;
-  font-size: 12px;
+  font-size: 26px;
   color: #00ff41;
   text-shadow: 0 0 10px #00ff41;
 }
@@ -250,7 +253,7 @@ body {
 .input-group label {
   display: block;
   margin-bottom: 8px;
-  font-size: 8px;
+  font-size: 16px;
   color: #00ff41;
   text-transform: uppercase;
 }
@@ -258,10 +261,10 @@ body {
 .input-group input,
 .input-group textarea {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   border: 2px solid #333;
   font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
+  font-size: 16px;
   background: #0f0f23;
   color: #00ff41;
   box-shadow: inset 2px 2px 0 #000;
@@ -287,8 +290,8 @@ body {
 
 .generate-btn {
   font-family: 'Press Start 2P', monospace;
-  font-size: 6px;
-  padding: 8px 12px;
+  font-size: 14px;
+  padding: 12px 16px;
   background: linear-gradient(45deg, #ffeb3b, #fbc02d);
   color: #000;
   border: 2px solid #333;
@@ -312,8 +315,8 @@ body {
 .join-btn {
   width: 100%;
   font-family: 'Press Start 2P', monospace;
-  font-size: 10px;
-  padding: 12px;
+  font-size: 18px;
+  padding: 16px;
   background: linear-gradient(45deg, #2196F3, #1976D2);
   color: #fff;
   border: 3px solid #333;
@@ -331,8 +334,8 @@ body {
 .spectator-btn {
   width: 100%;
   font-family: 'Press Start 2P', monospace;
-  font-size: 10px;
-  padding: 12px;
+  font-size: 18px;
+  padding: 16px;
   background: linear-gradient(45deg, #FF9800, #F57C00);
   color: #fff;
   border: 3px solid #333;
@@ -359,14 +362,14 @@ body {
 .game-rules h3 {
   margin-top: 0;
   margin-bottom: 12px;
-  font-size: 8px;
+  font-size: 18px;
   color: #ffeb3b;
 }
 
 .game-rules ul {
   margin: 8px 0;
   padding-left: 16px;
-  font-size: 6px;
+  font-size: 14px;
   line-height: 1.8;
 }
 
@@ -386,7 +389,7 @@ body {
 
 .rule-section h4 {
   margin: 0 0 8px 0;
-  font-size: 7px;
+  font-size: 16px;
   color: #4caf50;
   text-transform: uppercase;
 }
@@ -398,7 +401,7 @@ body {
 
 .rule-section li {
   margin-bottom: 4px;
-  font-size: 5px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -414,15 +417,405 @@ body {
   }
 
   .rule-section {
-    padding: 10px;
+    padding: 12px;
   }
 
   .rule-section h4 {
-    font-size: 6px;
+    font-size: 14px;
   }
 
   .rule-section li {
-    font-size: 4px;
+    font-size: 12px;
+  }
+}
+
+/* Lobby Tabs Styles */
+.lobby-tabs {
+  display: flex;
+  margin-bottom: 24px;
+  border: 2px solid #333;
+  background: #0f0f23;
+  box-shadow: inset 2px 2px 0 #000;
+}
+
+.tab-btn {
+  flex: 1;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  padding: 16px 20px;
+  background: #1a1a2e;
+  color: #ccc;
+  border: none;
+  border-right: 2px solid #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.tab-btn:last-child {
+  border-right: none;
+}
+
+.tab-btn:hover {
+  background: #2a2a3e;
+  color: #fff;
+}
+
+.tab-btn.active {
+  background: #ffeb3b;
+  color: #000;
+  text-shadow: none;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #0f0f23;
+  border: 2px solid #333;
+  box-shadow: inset 2px 2px 0 #000;
+}
+
+.tab-header h3 {
+  font-size: 22px;
+  color: #ffeb3b;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px #ffeb3b;
+}
+
+.tab-header p {
+  font-size: 16px;
+  color: #ccc;
+  margin: 0;
+}
+
+.create-info {
+  margin: 20px 0;
+  padding: 16px;
+  background: #0f0f23;
+  border: 2px solid #333;
+  box-shadow: inset 2px 2px 0 #000;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-icon {
+  font-size: 18px;
+  margin-right: 12px;
+  min-width: 24px;
+}
+
+.create-room-btn {
+  width: 100%;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 18px;
+  padding: 16px;
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  color: #fff;
+  border: 3px solid #333;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 #000;
+  text-shadow: 1px 1px 0 #000;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+.create-room-btn:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin: 16px 0;
+  background: rgba(244, 67, 54, 0.1);
+  border: 2px solid #f44336;
+  color: #f44336;
+  font-size: 14px;
+}
+
+.error-icon {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* Room Created Styles */
+.room-created {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 20px;
+}
+
+.room-created-container {
+  background: #1a1a2e;
+  border: 4px solid #00ff41;
+  padding: 30px;
+  max-width: 800px;
+  width: 90%;
+  box-shadow:
+    0 0 30px rgba(0, 255, 65, 0.5),
+    inset 0 0 0 4px #0f3460;
+}
+
+.success-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(45deg, #1a2e1a, #2a4a2a);
+  border: 3px solid #4CAF50;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+}
+
+.success-header h2 {
+  font-size: 24px;
+  color: #4CAF50;
+  margin-bottom: 12px;
+  text-shadow: 0 0 15px #4CAF50;
+}
+
+.success-header p {
+  font-size: 16px;
+  color: #00ff41;
+  margin: 0;
+}
+
+.room-info {
+  display: grid;
+  gap: 24px;
+}
+
+.room-code-section,
+.share-section,
+.instructions,
+.current-players {
+  background: #0f0f23;
+  border: 2px solid #333;
+  padding: 20px;
+  box-shadow: inset 2px 2px 0 #000;
+}
+
+.room-code-section h3,
+.share-section h3,
+.instructions h3,
+.current-players h3 {
+  font-size: 18px;
+  color: #ffeb3b;
+  margin-bottom: 16px;
+  text-shadow: 0 0 10px #ffeb3b;
+}
+
+.room-code-display {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.room-code {
+  font-size: 32px;
+  color: #00ff41;
+  background: #1a1a2e;
+  padding: 16px 24px;
+  border: 3px solid #00ff41;
+  text-shadow: 0 0 15px #00ff41;
+  letter-spacing: 4px;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+}
+
+.copy-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(45deg, #ffeb3b, #fbc02d);
+  color: #000;
+  border: 2px solid #333;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 #000;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+.copy-btn.copied {
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  color: #fff;
+}
+
+.share-url {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.share-input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #333;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  background: #1a1a2e;
+  color: #00ff41;
+  box-shadow: inset 2px 2px 0 #000;
+}
+
+.instruction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.instruction-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #ffeb3b;
+  color: #000;
+  font-weight: bold;
+  margin-right: 16px;
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+.players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: #1a1a2e;
+  border: 2px solid #333;
+  font-size: 16px;
+}
+
+.player-item.creator {
+  border-color: #ffeb3b;
+  background: linear-gradient(45deg, #2a1a00, #3d2700);
+  box-shadow: 0 0 15px rgba(255, 235, 59, 0.3);
+}
+
+.player-name {
+  color: #00ff41;
+  text-shadow: 0 0 10px #00ff41;
+}
+
+.continue-section {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #333;
+}
+
+.continue-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 18px;
+  padding: 16px 24px;
+  background: linear-gradient(45deg, #2196F3, #1976D2);
+  color: #fff;
+  border: 3px solid #333;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 #000;
+  text-shadow: 1px 1px 0 #000;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.continue-btn:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+.continue-note {
+  font-size: 14px;
+  color: #ccc;
+  margin: 0;
+}
+
+/* Mobile responsive for new components */
+@media (max-width: 768px) {
+  .tab-btn {
+    font-size: 14px;
+    padding: 12px 16px;
+  }
+
+  .tab-header h3 {
+    font-size: 18px;
+  }
+
+  .tab-header p {
+    font-size: 14px;
+  }
+
+  .room-code {
+    font-size: 24px;
+    padding: 12px 16px;
+    letter-spacing: 2px;
+  }
+
+  .room-code-display {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .share-url {
+    flex-direction: column;
+  }
+
+  .instruction-item {
+    font-size: 12px;
+  }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    margin-right: 12px;
   }
 }
 
@@ -436,8 +829,8 @@ body {
 /* Ready System Styles */
 .ready-btn {
   font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-  padding: 12px 20px;
+  font-size: 18px;
+  padding: 16px 24px;
   border: 3px solid #333;
   cursor: pointer;
   margin-top: 16px;
@@ -472,16 +865,16 @@ body {
 }
 
 .starting-message p {
-  font-size: 8px;
+  font-size: 14px;
   color: #4CAF50;
   text-shadow: 0 0 10px #4CAF50;
   margin-bottom: 12px;
 }
 
 .ready-badge {
-  font-size: 4px;
-  padding: 2px 4px;
-  margin-top: 2px;
+  font-size: 12px;
+  padding: 4px 8px;
+  margin-top: 4px;
   text-transform: uppercase;
   border-radius: 0;
 }
@@ -508,7 +901,7 @@ body {
 
 .room-header h2 {
   margin: 0;
-  font-size: 10px;
+  font-size: 20px;
   color: #00ff41;
   text-shadow: 0 0 10px #00ff41;
 }
@@ -558,7 +951,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 8px;
+  font-size: 16px;
   color: #00ff41;
 }
 
@@ -582,8 +975,8 @@ body {
 
 .game-content {
   display: grid;
-  grid-template-columns: 250px 1fr 300px;
-  gap: 16px;
+  grid-template-columns: 300px 1fr 350px;
+  gap: 20px;
   flex: 1;
   min-height: 0;
 }
@@ -592,14 +985,14 @@ body {
 .right-panel {
   background: #1a1a2e;
   border: 2px solid #00ff41;
-  padding: 16px;
+  padding: 20px;
   box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
 }
 
 .center-panel {
   background: #1a1a2e;
   border: 2px solid #00ff41;
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -611,7 +1004,7 @@ body {
 .player-list h4 {
   margin-top: 0;
   margin-bottom: 12px;
-  font-size: 8px;
+  font-size: 16px;
   color: #ffeb3b;
   text-transform: uppercase;
 }
@@ -620,11 +1013,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
-  margin-bottom: 6px;
+  padding: 12px;
+  margin-bottom: 8px;
   background: #0f0f23;
   border: 1px solid #333;
-  font-size: 6px;
+  font-size: 14px;
 }
 
 .player.prompt-giver {
@@ -645,11 +1038,11 @@ body {
 }
 
 .role-badge {
-  font-size: 4px;
+  font-size: 10px;
   background: #ffeb3b;
   color: #000;
-  padding: 2px 4px;
-  margin-top: 2px;
+  padding: 4px 8px;
+  margin-top: 4px;
   text-transform: uppercase;
 }
 
@@ -667,7 +1060,7 @@ body {
 
 .prompt-input-container h3 {
   margin-bottom: 8px;
-  font-size: 10px;
+  font-size: 20px;
   color: #00ff41;
   text-shadow: 0 0 10px #00ff41;
 }
@@ -681,7 +1074,7 @@ body {
 }
 
 .prompt-timer .timer {
-  font-size: 12px;
+  font-size: 18px;
   color: #ffeb3b;
   text-shadow: 0 0 10px #ffeb3b;
 }
@@ -694,10 +1087,10 @@ body {
 
 .prompt-input {
   width: 100%;
-  padding: 12px;
+  padding: 16px;
   border: 3px solid #333;
   font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
+  font-size: 16px;
   background: #0f0f23;
   color: #00ff41;
   box-shadow: inset 2px 2px 0 #000;
@@ -714,7 +1107,7 @@ body {
 
 .char-count {
   text-align: right;
-  font-size: 6px;
+  font-size: 12px;
   margin-top: 4px;
   color: #ccc;
 }
@@ -734,8 +1127,8 @@ body {
 .submit-prompt-btn,
 .random-image-btn {
   font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-  padding: 8px 16px;
+  font-size: 14px;
+  padding: 12px 20px;
   border: 2px solid #333;
   cursor: pointer;
   box-shadow: 2px 2px 0 #000;
@@ -846,7 +1239,7 @@ body {
 
 .guess-input-container h4 {
   margin-bottom: 8px;
-  font-size: 8px;
+  font-size: 16px;
   color: #00ff41;
   text-shadow: 0 0 10px #00ff41;
 }
@@ -860,7 +1253,7 @@ body {
 }
 
 .guess-timer .timer {
-  font-size: 10px;
+  font-size: 16px;
   color: #ffeb3b;
   text-shadow: 0 0 10px #ffeb3b;
 }
@@ -873,11 +1266,11 @@ body {
 
 .guess-input {
   width: 100%;
-  padding: 8px;
+  padding: 12px;
   border: 2px solid #333;
   margin-bottom: 8px;
   font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
+  font-size: 16px;
   background: #0f0f23;
   color: #00ff41;
   box-shadow: inset 2px 2px 0 #000;
@@ -900,8 +1293,8 @@ body {
 .submit-guess-btn {
   width: 100%;
   font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-  padding: 8px;
+  font-size: 14px;
+  padding: 12px;
   background: linear-gradient(45deg, #4CAF50, #45a049);
   color: #fff;
   border: 2px solid #333;
@@ -950,16 +1343,16 @@ body {
 
 .guesses-list h4 {
   margin-bottom: 8px;
-  font-size: 8px;
+  font-size: 16px;
   color: #ffeb3b;
 }
 
 .guess-item {
-  padding: 6px;
-  margin-bottom: 4px;
+  padding: 10px;
+  margin-bottom: 6px;
   background: #0f0f23;
   border: 1px solid #333;
-  font-size: 6px;
+  font-size: 12px;
   text-align: left;
   box-shadow: inset 1px 1px 0 #000;
 }
@@ -977,7 +1370,7 @@ body {
 .round-results h3 {
   margin-bottom: 16px;
   color: #ffeb3b;
-  font-size: 12px;
+  font-size: 22px;
   text-shadow: 0 0 15px #ffeb3b;
 }
 
@@ -991,7 +1384,7 @@ body {
 
 .original-prompt h4 {
   margin-bottom: 8px;
-  font-size: 8px;
+  font-size: 16px;
   color: #00ff41;
 }
 
@@ -1001,7 +1394,7 @@ body {
 
 .guesses-results h4 {
   margin-bottom: 8px;
-  font-size: 8px;
+  font-size: 18px;
   color: #00ff41;
 }
 
@@ -1009,11 +1402,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 8px;
-  margin-bottom: 4px;
+  padding: 10px 12px;
+  margin-bottom: 6px;
   background: #0f0f23;
   border: 1px solid #333;
-  font-size: 6px;
+  font-size: 14px;
   box-shadow: inset 1px 1px 0 #000;
 }
 
@@ -1063,7 +1456,7 @@ body {
   background: #0f0f23;
   border: 2px solid #666;
   color: #666;
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .next-round-info {
@@ -1072,7 +1465,7 @@ body {
   background: #0f0f23;
   border: 2px solid #333;
   box-shadow: inset 2px 2px 0 #000;
-  font-size: 8px;
+  font-size: 14px;
   color: #ccc;
 }
 
@@ -1093,7 +1486,7 @@ body {
   margin-bottom: 8px;
   background: #0f0f23;
   border: 2px solid #333;
-  font-size: 8px;
+  font-size: 14px;
   box-shadow: inset 1px 1px 0 #000;
 }
 
@@ -1121,7 +1514,7 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
   body {
-    font-size: 6px;
+    font-size: 14px;
   }
 
   .game-content {
@@ -1146,7 +1539,7 @@ body {
   }
 
   .App-header h1 {
-    font-size: 12px;
+    font-size: 24px;
   }
 }
 
@@ -1205,7 +1598,7 @@ ator styles */
 .spectator-section h4 {
   color: #FF9800;
   margin-bottom: 10px;
-  font-size: 10px;
+  font-size: 16px;
 }
 
 .spectators {
@@ -1232,7 +1625,7 @@ ator styles */
 
 .spectator-name {
   color: #FF9800;
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .spectator-guessing {
@@ -1251,7 +1644,7 @@ ator styles */
 
 .spectator-note {
   color: #FF9800;
-  font-size: 8px;
+  font-size: 14px;
   margin-top: 10px;
 }
 
@@ -1264,7 +1657,7 @@ anced no-guesses styling for prompt giver */
 
 .no-guesses p:last-child {
   color: #888;
-  font-size: 7px;
+  font-size: 12px;
   margin-top: 8px;
 }
 
@@ -1272,7 +1665,7 @@ anced no-guesses styling for prompt giver */
  info styling */
 .turn-info {
   color: #888;
-  font-size: 7px;
+  font-size: 12px;
   margin-left: 5px;
 }
 
@@ -1287,7 +1680,7 @@ nced Game Finished Styles */
 }
 
 .game-complete-header h2 {
-  font-size: 14px;
+  font-size: 24px;
   color: #ffeb3b;
   text-shadow: 0 0 20px #ffeb3b;
   margin-bottom: 8px;
@@ -1295,7 +1688,7 @@ nced Game Finished Styles */
 }
 
 .game-complete-header p {
-  font-size: 8px;
+  font-size: 14px;
   color: #00ff41;
   margin: 0;
 }
@@ -1403,7 +1796,7 @@ nced Game Finished Styles */
 }
 
 .rank-position {
-  font-size: 12px;
+  font-size: 20px;
   margin-right: 16px;
   min-width: 24px;
   text-align: center;
@@ -1417,13 +1810,13 @@ nced Game Finished Styles */
 }
 
 .player-name {
-  font-size: 8px;
+  font-size: 14px;
   color: #ffeb3b;
   text-shadow: 0 0 10px #ffeb3b;
 }
 
 .player-score {
-  font-size: 8px;
+  font-size: 14px;
   color: #00ff41;
   text-shadow: 0 0 10px #00ff41;
   font-weight: bold;
@@ -1434,7 +1827,7 @@ nced Game Finished Styles */
   background: #0f0f23;
   border: 2px solid #333;
   box-shadow: inset 2px 2px 0 #000;
-  font-size: 7px;
+  font-size: 12px;
   color: #ccc;
 }
 
@@ -1444,22 +1837,22 @@ nced Game Finished Styles */
 
 .game-stats p:first-child {
   color: #ffeb3b;
-  font-size: 8px;
+  font-size: 14px;
   text-shadow: 0 0 10px #ffeb3b;
 }
 
 /* Mobile responsiveness for game finished screen */
 @media (max-width: 768px) {
   .game-complete-header h2 {
-    font-size: 10px;
+    font-size: 18px;
   }
 
   .winner-announcement h3 {
-    font-size: 9px;
+    font-size: 16px;
   }
 
   .winner-score {
-    font-size: 8px;
+    font-size: 14px;
   }
 
   .ranking-item {
@@ -1467,14 +1860,14 @@ nced Game Finished Styles */
   }
 
   .rank-position {
-    font-size: 10px;
+    font-size: 18px;
     margin-right: 12px;
     min-width: 20px;
   }
 
   .player-name,
   .player-score {
-    font-size: 7px;
+    font-size: 12px;
   }
 }
 
@@ -1655,7 +2048,7 @@ trols */
 }
 
 .rounds-info small {
-  font-size: 6px;
+  font-size: 10px;
   color: #ccc;
   font-family: 'Press Start 2P', monospace;
 }
@@ -1673,13 +2066,13 @@ trols */
 
 .rounds-display-only span {
   font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
+  font-size: 14px;
   color: #ffeb3b;
   text-shadow: 0 0 10px #ffeb3b;
 }
 
 .rounds-display-only small {
-  font-size: 6px;
+  font-size: 10px;
   color: #ccc;
   font-family: 'Press Start 2P', monospace;
 }
@@ -2305,4 +2698,912 @@ ooter Styling */
 
 .App>*:not(.app-footer) {
   flex: 1;
+}
+
+/* Interactive Tutorial Slider Styles */
+.tutorial-section {
+  margin-top: 40px;
+  text-align: left;
+  background: #0f0f23;
+  border: 2px solid #333;
+  padding: 20px;
+  box-shadow: inset 2px 2px 0 #000;
+}
+
+.tutorial-section h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #ffeb3b;
+  text-align: center;
+  text-shadow: 0 0 10px #ffeb3b;
+}
+
+.tutorial-slider {
+  position: relative;
+  background: #1a1a2e;
+  border: 2px solid #444;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+}
+
+.slide-container {
+  position: relative;
+  height: 450px;
+  overflow: hidden;
+}
+
+.slides-wrapper {
+  display: flex;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tutorial-slide {
+  min-width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.slide-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #333;
+}
+
+.slide-icon {
+  font-size: 32px;
+  margin-right: 16px;
+  filter: drop-shadow(0 0 8px rgba(255, 235, 59, 0.5));
+}
+
+.slide-header h4 {
+  font-size: 18px;
+  color: #ffeb3b;
+  margin: 0;
+  text-shadow: 0 0 10px #ffeb3b;
+}
+
+.slide-content {
+  flex: 1;
+}
+
+.slide-content ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.slide-content li {
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ccc;
+  position: relative;
+  padding-left: 20px;
+}
+
+.slide-content li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  color: #00ff41;
+  font-size: 12px;
+  top: 2px;
+}
+
+.slide-content li:last-child {
+  margin-bottom: 0;
+}
+
+.tutorial-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #0f0f23;
+  border-top: 2px solid #333;
+}
+
+.nav-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(45deg, #2196F3, #1976D2);
+  color: #fff;
+  border: 2px solid #333;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 #000;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-btn:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #000;
+  background: linear-gradient(45deg, #1976D2, #1565C0);
+}
+
+.nav-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 #000;
+}
+
+.slide-indicators {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: inset 1px 1px 0 #000;
+}
+
+.indicator:hover {
+  background: #888;
+  transform: scale(1.1);
+}
+
+.indicator.active {
+  background: #ffeb3b;
+  border-color: #ffeb3b;
+  box-shadow:
+    0 0 10px rgba(255, 235, 59, 0.5),
+    inset 1px 1px 0 #000;
+  transform: scale(1.2);
+}
+
+.slide-counter {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #ffeb3b;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: 1px solid #333;
+}
+
+/* Touch/Swipe Support */
+.tutorial-slider {
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.slides-wrapper {
+  cursor: grab;
+}
+
+.slides-wrapper:active {
+  cursor: grabbing;
+}
+
+/* Mobile responsive for tutorial */
+@media (max-width: 768px) {
+  .slide-container {
+    height: 380px;
+  }
+
+  .tutorial-slide {
+    padding: 16px;
+  }
+
+  .slide-icon {
+    font-size: 24px;
+    margin-right: 12px;
+  }
+
+  .slide-header h4 {
+    font-size: 16px;
+  }
+
+  .slide-content li {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .tutorial-controls {
+    padding: 12px 16px;
+  }
+
+  .slide-counter {
+    font-size: 10px;
+    top: 8px;
+    right: 12px;
+  }
+}
+/* Join B
+uttons Styling */
+.join-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.join-btn,
+.spectator-btn {
+  width: 100%;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  padding: 16px;
+  border: 2px solid #333;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 #000;
+  text-shadow: 1px 1px 0 #000;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.join-btn {
+  background: linear-gradient(45deg, #2196F3, #1976D2);
+  color: #fff;
+}
+
+.spectator-btn {
+  background: linear-gradient(45deg, #ff6b35, #f44336);
+  color: #fff;
+}
+
+.join-btn:hover,
+.spectator-btn:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+.join-btn:hover {
+  background: linear-gradient(45deg, #1976D2, #1565C0);
+}
+
+.spectator-btn:hover {
+  background: linear-gradient(45deg, #f44336, #d32f2f);
+}
+
+/* Input Group Styling */
+.input-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 8px;
+  color: #ffeb3b;
+  text-shadow: 0 0 10px #ffeb3b;
+  text-transform: uppercase;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #333;
+  background: #0f0f23;
+  color: #00ff41;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  box-shadow: inset 2px 2px 0 #000;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #00ff41;
+  box-shadow: 
+    inset 2px 2px 0 #000,
+    0 0 15px rgba(0, 255, 65, 0.5);
+}
+
+.input-group input::placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+/* Mobile responsiveness for join buttons */
+@media (max-width: 768px) {
+  .join-btn,
+  .spectator-btn {
+    font-size: 8px;
+    padding: 12px;
+  }
+  
+  .input-group label {
+    font-size: 7px;
+  }
+  
+  .input-group input {
+    font-size: 14px;
+    padding: 10px;
+  }
+}/* Ga
+me Lobby Container */
+.game-lobby {
+  min-height: calc(100vh - 140px);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.lobby-container {
+  width: 100%;
+  max-width: 800px;
+  background: #1a1a2e;
+  border: 3px solid #00ff41;
+  padding: 24px;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+  margin: 0 auto;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+
+  .App {
+    overflow-x: hidden;
+  }
+
+  .game-lobby {
+    padding: 10px;
+    min-height: calc(100vh - 100px);
+  }
+
+  .lobby-container {
+    padding: 16px;
+    border: 2px solid #00ff41;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  /* Title adjustments for mobile */
+  .title-main {
+    font-size: 20px;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .title-subtitle {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Header adjustments */
+  .App-header {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .App-header h1 {
+    font-size: 18px;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .logo {
+    font-size: 18px;
+    padding: 2px 4px;
+    margin-right: 4px;
+  }
+
+  /* Tab buttons mobile */
+  .tab-btn {
+    font-size: 6px;
+    padding: 8px 12px;
+    line-height: 1.2;
+  }
+
+  /* Tab headers mobile */
+  .tab-header h3 {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .tab-header p {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  /* Input groups mobile */
+  .input-group {
+    margin-bottom: 12px;
+  }
+
+  .input-group label {
+    font-size: 6px;
+    margin-bottom: 6px;
+  }
+
+  .input-group input {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  /* Buttons mobile */
+  .create-room-btn,
+  .join-btn,
+  .spectator-btn {
+    font-size: 7px;
+    padding: 12px;
+    line-height: 1.2;
+  }
+
+  /* Tutorial section mobile */
+  .tutorial-section {
+    margin-top: 20px;
+    padding: 12px;
+  }
+
+  .tutorial-section h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  /* Error message mobile */
+  .error-message {
+    font-size: 10px;
+    padding: 8px;
+    margin: 12px 0;
+  }
+
+  /* Info items mobile */
+  .info-item {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+
+  .info-icon {
+    font-size: 12px;
+    margin-right: 8px;
+    min-width: 16px;
+  }
+
+  /* Create info section mobile */
+  .create-info {
+    margin: 16px 0;
+    padding: 12px;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .game-lobby {
+    padding: 5px;
+  }
+
+  .lobby-container {
+    padding: 12px;
+    border: 1px solid #00ff41;
+  }
+
+  .title-main {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  .title-subtitle {
+    font-size: 8px;
+  }
+
+  .App-header h1 {
+    font-size: 14px;
+  }
+
+  .logo {
+    font-size: 14px;
+    padding: 1px 2px;
+    margin-right: 2px;
+  }
+
+  .tab-btn {
+    font-size: 5px;
+    padding: 6px 8px;
+  }
+
+  .tab-header h3 {
+    font-size: 12px;
+  }
+
+  .tab-header p {
+    font-size: 8px;
+  }
+
+  .input-group input {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  .create-room-btn,
+  .join-btn,
+  .spectator-btn {
+    font-size: 6px;
+    padding: 10px;
+  }
+
+  .tutorial-section h3 {
+    font-size: 12px;
+  }
+
+  .error-message {
+    font-size: 8px;
+    padding: 6px;
+  }
+}
+
+/* Prevent horizontal overflow */
+* {
+  box-sizing: border-box;
+}
+
+.App,
+.game-lobby,
+.lobby-container {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Ensure text doesn't break layout */
+h1, h2, h3, h4, h5, h6 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Button text wrapping */
+button {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}/* 
+Desktop Game Lobby Container - Properly Sized */
+.game-lobby {
+  min-height: calc(100vh - 140px);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.lobby-container {
+  width: 100%;
+  max-width: 500px;
+  background: #1a1a2e;
+  border: 3px solid #00ff41;
+  padding: 32px;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+  margin: 0 auto;
+}
+
+/* Desktop Responsive - Medium screens */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .lobby-container {
+    max-width: 450px;
+    padding: 28px;
+  }
+}
+
+/* Desktop Responsive - Large screens */
+@media (min-width: 1201px) {
+  .lobby-container {
+    max-width: 500px;
+    padding: 32px;
+  }
+}
+
+/* Mobile Responsive Fixes */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+
+  .App {
+    overflow-x: hidden;
+  }
+
+  .game-lobby {
+    padding: 10px;
+    min-height: calc(100vh - 100px);
+  }
+
+  .lobby-container {
+    padding: 16px;
+    border: 2px solid #00ff41;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  /* Title adjustments for mobile */
+  .title-main {
+    font-size: 20px;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .title-subtitle {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Header adjustments */
+  .App-header {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .App-header h1 {
+    font-size: 18px;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .logo {
+    font-size: 18px;
+    padding: 2px 4px;
+    margin-right: 4px;
+  }
+
+  /* Tab buttons mobile */
+  .tab-btn {
+    font-size: 6px;
+    padding: 8px 12px;
+    line-height: 1.2;
+  }
+
+  /* Tab headers mobile */
+  .tab-header h3 {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .tab-header p {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  /* Input groups mobile */
+  .input-group {
+    margin-bottom: 12px;
+  }
+
+  .input-group label {
+    font-size: 6px;
+    margin-bottom: 6px;
+  }
+
+  .input-group input {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  /* Buttons mobile */
+  .create-room-btn,
+  .join-btn,
+  .spectator-btn {
+    font-size: 7px;
+    padding: 12px;
+    line-height: 1.2;
+  }
+
+  /* Tutorial section mobile */
+  .tutorial-section {
+    margin-top: 20px;
+    padding: 12px;
+  }
+
+  .tutorial-section h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  /* Error message mobile */
+  .error-message {
+    font-size: 10px;
+    padding: 8px;
+    margin: 12px 0;
+  }
+
+  /* Info items mobile */
+  .info-item {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+
+  .info-icon {
+    font-size: 12px;
+    margin-right: 8px;
+    min-width: 16px;
+  }
+
+  /* Create info section mobile */
+  .create-info {
+    margin: 16px 0;
+    padding: 12px;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .game-lobby {
+    padding: 5px;
+  }
+
+  .lobby-container {
+    padding: 12px;
+    border: 1px solid #00ff41;
+  }
+
+  .title-main {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  .title-subtitle {
+    font-size: 8px;
+  }
+
+  .App-header h1 {
+    font-size: 14px;
+  }
+
+  .logo {
+    font-size: 14px;
+    padding: 1px 2px;
+    margin-right: 2px;
+  }
+
+  .tab-btn {
+    font-size: 5px;
+    padding: 6px 8px;
+  }
+
+  .tab-header h3 {
+    font-size: 12px;
+  }
+
+  .tab-header p {
+    font-size: 8px;
+  }
+
+  .input-group input {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  .create-room-btn,
+  .join-btn,
+  .spectator-btn {
+    font-size: 6px;
+    padding: 10px;
+  }
+
+  .tutorial-section h3 {
+    font-size: 12px;
+  }
+
+  .error-message {
+    font-size: 8px;
+    padding: 6px;
+  }
+}
+
+/* Prevent horizontal overflow globally */
+* {
+  box-sizing: border-box;
+}
+
+.App,
+.game-lobby,
+.lobby-container {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Ensure text doesn't break layout */
+h1, h2, h3, h4, h5, h6 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Button text wrapping */
+button {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}/* O
+verride Lobby Container to Match Room Created Width */
+.game-lobby .lobby-container {
+  background: #1a1a2e;
+  border: 4px solid #00ff41;
+  padding: 30px;
+  max-width: 800px;
+  width: 90%;
+  box-shadow:
+    0 0 30px rgba(0, 255, 65, 0.5),
+    inset 0 0 0 4px #0f3460;
+  margin: 0 auto;
+}
+
+/* Ensure lobby has proper layout */
+.game-lobby {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 20px;
+}
+
+/* Override any previous narrow styles */
+@media (min-width: 769px) {
+  .lobby-container {
+    max-width: 800px !important;
+    width: 90% !important;
+    padding: 30px !important;
+  }
+}/* L
+ogo Link Styling */
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.logo-link:hover {
+  transform: scale(1.02);
+  filter: brightness(1.1);
+}
+
+.logo-link:active {
+  transform: scale(0.98);
+}
+
+.logo-link h1 {
+  margin: 0;
+  font-size: 36px;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure logo link works on mobile */
+@media (max-width: 768px) {
+  .logo-link h1 {
+    font-size: 18px;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+  
+  .logo-link:hover {
+    transform: scale(1.01);
+  }
 }

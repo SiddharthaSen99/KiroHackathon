@@ -4,6 +4,7 @@ import GameLobby from './components/GameLobby';
 import GameRoom from './components/GameRoom';
 import RoomCreated from './components/RoomCreated';
 import soundManager from './utils/soundManager';
+import analytics from './utils/analytics';
 import './App.css';
 
 //const socket = io(process.env.NODE_ENV === 'production' ? 'https://kirohackathon-production.up.railway.app' : 'http://localhost:5000');
@@ -22,6 +23,9 @@ function App() {
   const [lobbyError, setLobbyError] = useState('');
 
   useEffect(() => {
+    // Track initial page view
+    analytics.trackPageView('Game Lobby');
+    
     // Clean up any existing listeners first
     socket.off('room_created');
     socket.off('room_update');
@@ -39,6 +43,9 @@ function App() {
       setPlayers(data.players);
       setSpectators(data.spectators || []);
       setGameState('room_created');
+
+      // Track room creation
+      analytics.trackPageView('Room Created');
     });
 
     socket.on('room_not_found', (data) => {
@@ -71,35 +78,35 @@ function App() {
       console.log('App.js: Received room_update:', data);
       const prevPlayers = players;
       const prevAllReady = allReady;
-      
+
       setLobbyError(''); // Clear errors on successful room update
       setPlayers(data.players);
       setSpectators(data.spectators || []);
       setAllReady(data.allReady || false);
-      
+
       // Update maxRounds if provided
       if (data.maxRounds !== undefined) {
         console.log('App.js: Updating maxRounds from', maxRounds, 'to', data.maxRounds);
         setMaxRounds(data.maxRounds);
       }
-      
+
       // Play sound effects for player changes
       if (prevPlayers.length < data.players.length) {
         soundManager.playPlayerJoin();
       }
-      
+
       // Play sound when someone becomes ready (but not when they become unready)
       const prevReadyCount = prevPlayers.filter(p => p.isReady).length;
       const newReadyCount = data.players.filter(p => p.isReady).length;
       if (newReadyCount > prevReadyCount) {
         soundManager.playPlayerReady();
       }
-      
+
       // Play special sound when all players are ready
       if (!prevAllReady && data.allReady) {
         soundManager.playAllReady();
       }
-      
+
       // Update game data if we're playing and have currentPromptGiver info
       if (data.currentPromptGiver) {
         setGameData(prevGameData => prevGameData ? {
@@ -107,7 +114,7 @@ function App() {
           currentPromptGiver: data.currentPromptGiver
         } : null);
       }
-      
+
       // Only set to room state if we're not already playing
       setGameState(currentState => {
         if (currentState !== 'playing') {
@@ -123,7 +130,7 @@ function App() {
       setPlayers(data.players);
       setSpectators(data.spectators || []);
       setIsSpectator(true);
-      
+
       // If game is in progress, set up game data for spectator
       if (data.gameState !== 'waiting') {
         setGameState('playing');
@@ -154,6 +161,9 @@ function App() {
         turnsCompletedInRound: data.turnsCompletedInRound,
         totalPlayersInRound: data.totalPlayersInRound
       });
+
+      // Track game start
+      analytics.trackGameStart(data.players.length, roomId);
     });
 
     return () => {
@@ -203,31 +213,39 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="header-content">
-          <div className="logo">I!</div>
-          <h1>AI Prompt Guesser</h1>
+          <a
+            href={process.env.NODE_ENV === 'production' ? 'https://imprompt.to' : 'http://localhost:3000'}
+            className="logo-link"
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.href = process.env.NODE_ENV === 'production' ? 'https://imprompt.to' : 'http://localhost:3000';
+            }}
+          >
+            <h1>A<span className="logo">I</span>! Prompt Guesser</h1>
+          </a>
         </div>
       </header>
-      
+
       {gameState === 'lobby' && (
-        <GameLobby 
-          onJoinRoom={joinRoom} 
-          onJoinAsSpectator={joinAsSpectator} 
+        <GameLobby
+          onJoinRoom={joinRoom}
+          onJoinAsSpectator={joinAsSpectator}
           onCreateRoom={createRoom}
           error={lobbyError}
           onClearError={clearLobbyError}
         />
       )}
-      
+
       {gameState === 'room_created' && (
-        <RoomCreated 
+        <RoomCreated
           roomId={roomId}
           players={players}
           onContinue={continueToRoom}
         />
       )}
-      
+
       {gameState === 'room' && (
-        <GameRoom 
+        <GameRoom
           players={players}
           spectators={spectators}
           currentPlayer={currentPlayer}
@@ -239,9 +257,9 @@ function App() {
           maxRoundsFromParent={maxRounds}
         />
       )}
-      
+
       {gameState === 'playing' && (
-        <GameRoom 
+        <GameRoom
           players={players}
           spectators={spectators}
           currentPlayer={currentPlayer}
@@ -254,13 +272,13 @@ function App() {
           maxRoundsFromParent={maxRounds}
         />
       )}
-      
+
       <footer className="app-footer">
         <div className="footer-content">
           <div className="footer-support">
-            <a 
-              href="https://buymeacoffee.com/sidsen" 
-              target="_blank" 
+            <a
+              href="https://buymeacoffee.com/sidsen"
+              target="_blank"
               rel="noopener noreferrer"
               className="coffee-link"
             >
@@ -271,9 +289,9 @@ function App() {
             <p>© 2024 Impromptu. All rights reserved.</p>
             <p>
               Designed and developed by{' '}
-              <a 
-                href="https://x.com/SidTheBuilder" 
-                target="_blank" 
+              <a
+                href="https://x.com/SidTheBuilder"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="developer-link"
               >

@@ -5,6 +5,7 @@ function GameLobby({ onJoinRoom, onJoinAsSpectator, onCreateRoom, error: externa
   const [roomId, setRoomId] = useState('');
   const [activeTab, setActiveTab] = useState('join'); // 'join' or 'create'
   const [error, setError] = useState('');
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   // Use external error if provided, otherwise use internal error
   const displayError = externalError || error;
@@ -13,6 +14,86 @@ function GameLobby({ onJoinRoom, onJoinAsSpectator, onCreateRoom, error: externa
   const clearErrors = () => {
     setError('');
     if (onClearError) onClearError();
+  };
+
+  // Tutorial slides data
+  const tutorialSlides = [
+    {
+      title: "📝 Game Flow",
+      icon: "🎮",
+      content: [
+        "One player creates a prompt (max 20 characters)",
+        "AI generates an image from that prompt",
+        "Other players try to guess the original prompt",
+        "Points awarded based on accuracy and speed",
+        "Everyone takes turns being the prompt creator"
+      ]
+    },
+    {
+      title: "⏱️ Timing",
+      icon: "⏰",
+      content: [
+        "Prompt Phase: 30 seconds to create your prompt",
+        "Guessing Phase: 30 seconds to guess the prompt",
+        "Quick thinking gets bonus points!"
+      ]
+    },
+    {
+      title: "🏆 Scoring System",
+      icon: "🎯",
+      content: [
+        "Guessers: 90-100% match = Full points (90-100)",
+        "70-89% match: Great score (63-80 points)",
+        "50-69% match: Good score (40-55 points)",
+        "30-49% match: Decent score (21-34 points)",
+        "Prompt Giver: More points for challenging (but fair) prompts",
+        "Speed Bonus: First 3 good guesses get extra points!"
+      ]
+    },
+    {
+      title: "✍️ Creating Good Prompts",
+      icon: "💭",
+      content: [
+        "Make prompts challenging but fair - not too easy or impossible",
+        "Avoid gibberish or made-up words (you'll get 0 points!)",
+        "Think descriptive but concise (max 20 characters)",
+        "Sweet spot: Hard enough that people struggle but can still guess",
+        "Examples: 'red sports car', 'happy dog', 'sunset beach'"
+      ]
+    },
+    {
+      title: "💡 Pro Tips",
+      icon: "🧠",
+      content: [
+        "Guessers: Submit multiple guesses - keep trying!",
+        "Think about synonyms and alternative phrasings",
+        "Prompt Givers: Clear, descriptive prompts work best",
+        "Speed matters - first correct guesses get bonus points",
+        "2-8 players can join a room"
+      ]
+    },
+    {
+      title: "⚠️ Important Notice",
+      icon: "🚨",
+      content: [
+        "No Rejoining: Once you leave during a game, you cannot rejoin",
+        "Stay Connected: Make sure you have stable connection",
+        "Game Continues: If someone leaves, game continues",
+        "New Game: You'll need to create/join a new room if you leave"
+      ]
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % tutorialSlides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + tutorialSlides.length) % tutorialSlides.length);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
   };
 
   const handleSubmit = (e) => {
@@ -169,60 +250,64 @@ function GameLobby({ onJoinRoom, onJoinAsSpectator, onCreateRoom, error: externa
           </div>
         )}
 
-        <div className="game-rules">
+        <div className="tutorial-section">
           <h3>🎮 How to Play</h3>
-          <div className="rules-content">
-            <div className="rule-section">
-              <h4>📝 Game Flow</h4>
-              <ul>
-                <li><strong>Create Prompt:</strong> One player writes a short prompt (max 20 characters)</li>
-                <li><strong>AI Magic:</strong> AI generates an image from the prompt</li>
-                <li><strong>Guess Time:</strong> Other players guess the original prompt (max 20 characters)</li>
-                <li><strong>Score Points:</strong> Earn points based on how close your guess is!</li>
-                <li><strong>Rotate Turns:</strong> Everyone gets to be the prompt creator</li>
-              </ul>
+          
+          <div className="tutorial-slider">
+            <div className="slide-container">
+              <div 
+                className="slides-wrapper" 
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {tutorialSlides.map((slide, index) => (
+                  <div key={index} className="tutorial-slide">
+                    <div className="slide-header">
+                      <div className="slide-icon">{slide.icon}</div>
+                      <h4>{slide.title}</h4>
+                    </div>
+                    <div className="slide-content">
+                      <ul>
+                        {slide.content.map((item, itemIndex) => (
+                          <li key={itemIndex}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="rule-section">
-              <h4>⏱️ Timing</h4>
-              <ul>
-                <li><strong>Prompt Phase:</strong> 30 seconds to create your prompt</li>
-                <li><strong>Guessing Phase:</strong> 30 seconds to guess the prompt</li>
-                <li><strong>Results:</strong> 8 seconds to review scores and see the original prompt</li>
-              </ul>
+            <div className="tutorial-controls">
+              <button 
+                className="nav-btn prev-btn" 
+                onClick={prevSlide}
+                aria-label="Previous slide"
+              >
+                ◀
+              </button>
+              
+              <div className="slide-indicators">
+                {tutorialSlides.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`indicator ${index === currentSlide ? 'active' : ''}`}
+                    onClick={() => goToSlide(index)}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+              
+              <button 
+                className="nav-btn next-btn" 
+                onClick={nextSlide}
+                aria-label="Next slide"
+              >
+                ▶
+              </button>
             </div>
 
-            <div className="rule-section">
-              <h4>🏆 Scoring System</h4>
-              <ul>
-                <li><strong>90-100% match:</strong> Full points (90-100)</li>
-                <li><strong>70-89% match:</strong> Great score (63-80 points)</li>
-                <li><strong>50-69% match:</strong> Good score (40-55 points)</li>
-                <li><strong>30-49% match:</strong> Decent score (21-34 points)</li>
-                <li><strong>20-29% match:</strong> Some points (12-17 points)</li>
-                <li><strong>Speed Bonus:</strong> First 3 good guesses get bonus points!</li>
-              </ul>
-            </div>
-
-            <div className="rule-section">
-              <h4>💡 Pro Tips</h4>
-              <ul>
-                <li>You can submit multiple guesses - keep trying!</li>
-                <li>Think about synonyms and alternative words</li>
-                <li>Simple, clear prompts work best for AI</li>
-                <li>Speed matters - quick accurate guesses get bonus points</li>
-                <li>2-8 players can join a room</li>
-              </ul>
-            </div>
-
-            <div className="rule-section">
-              <h4>⚠️ Important Notice</h4>
-              <ul>
-                <li><strong>No Rejoining:</strong> Once you leave a room during a game, you cannot rejoin</li>
-                <li><strong>Stay Connected:</strong> Make sure you have a stable connection before starting</li>
-                <li><strong>Game Continues:</strong> If someone leaves, the game continues with remaining players</li>
-                <li><strong>New Game:</strong> If you need to leave, you'll need to create or join a new room</li>
-              </ul>
+            <div className="slide-counter">
+              {currentSlide + 1} / {tutorialSlides.length}
             </div>
           </div>
         </div>

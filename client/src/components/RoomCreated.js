@@ -10,15 +10,6 @@ function RoomCreated({ roomId, players, onContinue }) {
     });
   };
 
-  const shareUrl = `${window.location.origin}?room=${roomId}`;
-
-  const copyShareUrl = () => {
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  };
-
   return (
     <div className="room-created">
       <div className="room-created-container">
@@ -32,7 +23,7 @@ function RoomCreated({ roomId, players, onContinue }) {
             <h3>Room Code</h3>
             <div className="room-code-display">
               <span className="room-code">{roomId}</span>
-              <button 
+              <button
                 className={`copy-btn ${copied ? 'copied' : ''}`}
                 onClick={copyRoomCode}
               >
@@ -45,15 +36,20 @@ function RoomCreated({ roomId, players, onContinue }) {
             <h3>Share with Friends</h3>
             <div className="share-options">
               <div className="share-url">
-                <input 
-                  type="text" 
-                  value={shareUrl} 
-                  readOnly 
+                <input
+                  type="text"
+                  value={window.location.origin}
+                  readOnly
                   className="share-input"
                 />
-                <button 
+                <button
                   className={`copy-btn ${copied ? 'copied' : ''}`}
-                  onClick={copyShareUrl}
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.origin).then(() => {
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000);
+                    });
+                  }}
                 >
                   {copied ? '✓ Copied!' : '📋 Copy Link'}
                 </button>
@@ -66,15 +62,15 @@ function RoomCreated({ roomId, players, onContinue }) {
             <div className="instruction-list">
               <div className="instruction-item">
                 <span className="step-number">1</span>
-                <span>Share the room code <strong>{roomId}</strong> with your friends</span>
+                <span>Send the game link above to your friends</span>
               </div>
               <div className="instruction-item">
                 <span className="step-number">2</span>
-                <span>They can join by entering the code on the main page</span>
+                <span>Share the room code <strong>{roomId}</strong> with them</span>
               </div>
               <div className="instruction-item">
                 <span className="step-number">3</span>
-                <span>Or share the direct link above for instant access</span>
+                <span>They enter the room code on the main page to join</span>
               </div>
               <div className="instruction-item">
                 <span className="step-number">4</span>
