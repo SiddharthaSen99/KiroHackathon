@@ -4,19 +4,24 @@ FROM node:18-alpine
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-COPY client/package*.json ./client/
+# Copy package.json files first for better caching
+COPY package.json ./
+COPY client/package.json ./client/
 
-# Install dependencies
-RUN npm ci --only=production
-RUN cd client && npm ci --only=production
+# Install root dependencies
+RUN npm install --omit=dev
+
+# Install client dependencies
+RUN cd client && npm install
 
 # Copy source code
 COPY . .
 
 # Build React app
 RUN cd client && npm run build
+
+# Remove client node_modules to save space
+RUN rm -rf client/node_modules
 
 # Expose port
 EXPOSE 5000
