@@ -1515,7 +1515,8 @@ trols */
   }
 }
 
-/ * Game Settings - Rounds Selector */ .game-settings {
+/* Game Settings - Rounds Selector */
+.game-settings {
   margin: 20px 0;
   padding: 16px;
   background: #1a1a2e;
@@ -2162,6 +2163,7 @@ connected Player Styles */
 .player.disconnected .role-badge {
   opacity: 0.5;
 }
+
 /* F
 ooter Styling */
 .app-footer {
@@ -2238,12 +2240,12 @@ ooter Styling */
   .footer-content {
     padding: 0 15px;
   }
-  
+
   .coffee-link {
     font-size: 9px;
     padding: 6px 12px;
   }
-  
+
   .footer-credits {
     font-size: 6px;
   }
@@ -2256,6 +2258,6 @@ ooter Styling */
   flex-direction: column;
 }
 
-.App > *:not(.app-footer) {
+.App>*:not(.app-footer) {
   flex: 1;
 }
