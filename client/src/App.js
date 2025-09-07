@@ -286,7 +286,7 @@ function App() {
             </a>
           </div>
           <div className="footer-credits">
-            <p>© 2024 Impromptu. All rights reserved.</p>
+            <p>© 2025 Impromptu. All rights reserved.</p>
             <p>
               Designed and developed by{' '}
               <a
