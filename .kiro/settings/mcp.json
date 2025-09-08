@@ -1,22 +1,75 @@
 {
-  "mcpServers": {
-    "filesystem": {
-      "command": "uvx",
-      "args": ["mcp-server-filesystem", "--base-directory", "."],
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "disabled": false,
-      "autoApprove": ["read_file", "list_directory"]
-    },
-    "git": {
-      "command": "uvx", 
-      "args": ["mcp-server-git"],
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "disabled": false,
-      "autoApprove": ["git_status", "git_log", "git_diff"]
+    "mcpServers": {
+        "filesystem": {
+            "command": "uvx",
+            "args": [
+                "mcp-server-filesystem",
+                "--base-directory",
+                "."
+            ],
+            "env": {
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            },
+            "disabled": true,
+            "autoApprove": [
+                "read_file",
+                "list_directory",
+                "search_files"
+            ]
+        },
+        "git": {
+            "command": "uvx",
+            "args": [
+                "mcp-server-git"
+            ],
+            "env": {
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            },
+            "disabled": true,
+            "autoApprove": [
+                "git_status",
+                "git_log",
+                "git_diff",
+                "git_show"
+            ]
+        },
+        "github": {
+            "command": "uvx",
+            "args": ["mcp-server-github"],
+            "env": {
+                "GITHUB_PERSONAL_ACCESS_TOKEN": "",
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            },
+            "disabled": true,
+            "autoApprove": ["search_repositories", "get_file_contents", "list_issues"]
+        },
+        "web-search": {
+            "command": "uvx",
+            "args": ["mcp-server-brave-search"],
+            "env": {
+                "BRAVE_API_KEY": "",
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            },
+            "disabled": true,
+            "autoApprove": ["web_search"]
+        },
+        "docker": {
+            "command": "uvx",
+            "args": ["mcp-server-docker"],
+            "env": {
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            },
+            "disabled": true,
+            "autoApprove": ["list_containers", "get_container_info", "container_logs"]
+        },
+        "postgres": {
+            "command": "uvx", 
+            "args": ["mcp-server-postgres", "postgresql://localhost/gamedb"],
+            "env": {
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            },
+            "disabled": true,
+            "autoApprove": ["query", "list_tables", "describe_table"]
+        }
     }
-  }
 }

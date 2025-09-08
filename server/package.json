@@ -1,0 +1,7 @@
+{
+  "name": "ai-prompt-guesser-server",
+  "version": "1.0.0",
+  "description": "Server for AI prompt guesser game",
+  "main": "index.js",
+  "scripts": {}
+}
