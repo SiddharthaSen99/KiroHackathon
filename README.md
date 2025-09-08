@@ -89,19 +89,36 @@ Similarity is calculated using:
 
 - **Frontend**: React, Socket.io Client
 - **Backend**: Node.js, Express, Socket.io
-- **AI**: OpenAI DALL-E API
-- **Similarity**: String similarity + optional embeddings
+- **AI**: Together.ai (primary), Fal.ai, Replicate (fallbacks)
+- **Similarity**: String similarity + word overlap analysis
+
+## Documentation
+
+### Requirements & Specifications
+- **[Formal Requirements](.kiro/specs/multiplayer-prompt-guessing-game/requirements.md)**: Detailed user stories and acceptance criteria
+- **[Game Architecture](.kiro/specs/game-architecture.md)**: System design and architecture decisions
+- **[AI Integration Strategy](.kiro/specs/ai-integration-strategy.md)**: AI provider integration and cost optimization
+
+### Setup & Deployment
+- **[Provider Setup](docs/setup/SETUP_PROVIDERS.md)**: AI provider configuration guide
+- **[Deployment Guide](docs/deployment/DEPLOYMENT.md)**: Production deployment instructions
+- **[Analytics Setup](docs/setup/ANALYTICS_SETUP.md)**: Analytics and monitoring configuration
+
+### Development
+- **[Repository Structure](docs/REPOSITORY_STRUCTURE.md)**: Project organization and file structure
+- **[Development Guidelines](.kiro/steering/)**: Code patterns and best practices
 
 ## Contributing
 
-Feel free to submit issues and pull requests! Some ideas for improvements:
+Feel free to submit issues and pull requests! Check the [formal requirements](.kiro/specs/multiplayer-prompt-guessing-game/requirements.md) for detailed specifications.
 
-- Add different AI models (Stability AI, Midjourney)
+**Enhancement Ideas:**
+- Add different AI models and providers
 - Implement categories/themes for prompts
-- Add spectator mode
-- Create tournament brackets
-- Add chat functionality
-- Implement user accounts and statistics
+- Enhanced spectator features
+- Tournament brackets and competitive modes
+- Chat functionality and social features
+- User accounts and persistent statistics
 
 ## License
 

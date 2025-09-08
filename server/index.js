@@ -19,8 +19,8 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-        origin: process.env.NODE_ENV === 'production' 
-            ? ["https://kirohackathon-production.up.railway.app", "https://imprompt.to", "https://www.imprompt.to"] 
+        origin: process.env.NODE_ENV === 'production'
+            ? ["https://kirohackathon-production.up.railway.app", "https://imprompt.to", "https://www.imprompt.to"]
             : "http://localhost:3000",
         methods: ["GET", "POST"],
         credentials: true
@@ -28,8 +28,8 @@ const io = socketIo(server, {
 });
 
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-        ? ["https://kirohackathon-production.up.railway.app", "https://imprompt.to", "https://www.imprompt.to"] 
+    origin: process.env.NODE_ENV === 'production'
+        ? ["https://kirohackathon-production.up.railway.app", "https://imprompt.to", "https://www.imprompt.to"]
         : "http://localhost:3000",
     credentials: true
 }));
@@ -38,7 +38,7 @@ app.use(express.json());
 // Serve static files from React build in production
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
-    
+
     // Handle React routing - send all non-API requests to React
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
@@ -47,8 +47,8 @@ if (process.env.NODE_ENV === 'production') {
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-    res.json({ 
-        status: 'ok', 
+    res.json({
+        status: 'ok',
         timestamp: new Date().toISOString(),
         rooms: rooms.size,
         uptime: process.uptime()
@@ -80,7 +80,15 @@ const GAME_CONFIG = {
     POINTS_FOR_CLOSE_MATCH: 50
 };
 
+/**
+ * Represents a game room with players, spectators, and game state
+ * Manages turn rotation, scoring, and real-time multiplayer functionality
+ */
 class GameRoom {
+    /**
+     * Create a new game room
+     * @param {string} id - Unique 6-character room identifier
+     */
     constructor(id) {
         this.id = id;
         this.players = new Map();
@@ -655,7 +663,14 @@ io.on('connection', (socket) => {
         'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=512&h=512&fit=crop'  // Beach
     ];
 
-    // Improved similarity calculation with better semantic understanding
+    /**
+     * Calculate similarity between original prompt and player guess
+     * Uses multiple metrics: exact word matching, partial matching, word order, and synonyms
+     * 
+     * @param {string} originalPrompt - The original prompt text
+     * @param {string} guess - The player's guess
+     * @returns {number} Similarity score from 0-100
+     */
     function calculateSimilarity(originalPrompt, guess) {
         const normalize = (text) => text.toLowerCase().trim().replace(/[^\w\s]/g, '');
         const original = normalize(originalPrompt);

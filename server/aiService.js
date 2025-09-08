@@ -1,6 +1,14 @@
 const stringSimilarity = require('string-similarity');
 
+/**
+ * AI Service for generating images from text prompts
+ * Supports multiple providers with automatic fallback and cost optimization
+ */
 class AIService {
+  /**
+   * Initialize AI service with configured provider
+   * Defaults to Replicate for cost-effectiveness
+   */
   constructor() {
     this.provider = process.env.AI_PROVIDER || 'replicate'; // Default to cheapest option
     console.log('AI Provider initialized:', this.provider);
@@ -37,6 +45,14 @@ class AIService {
     }
   }
 
+  /**
+   * Generate an image from a text prompt using the configured AI provider
+   * Automatically enhances prompts and handles nonsense words
+   * 
+   * @param {string} prompt - The text prompt to generate an image from
+   * @returns {Promise<string>} URL of the generated image
+   * @throws {Error} If image generation fails across all providers
+   */
   async generateImage(prompt) {
     try {
       // Create smart prompt that handles nonsense words
@@ -210,6 +226,14 @@ class AIService {
     return response.data[0].url;
   }
 
+  /**
+   * Calculate similarity between original prompt and player guess
+   * Uses string similarity and word overlap analysis for accurate scoring
+   * 
+   * @param {string} originalPrompt - The original prompt text
+   * @param {string} guess - The player's guess
+   * @returns {Object} Scoring result with points, similarity metrics, and match status
+   */
   calculateSimilarity(originalPrompt, guess) {
     // Use the same improved algorithm as the main server
     const normalize = (text) => text.toLowerCase().trim().replace(/[^\w\s]/g, '');

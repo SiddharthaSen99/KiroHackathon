@@ -11,6 +11,12 @@ This directory contains all project documentation organized by category.
 
 ## Quick Links
 
+### Requirements & Specifications
+- [Game Requirements](../.kiro/specs/multiplayer-prompt-guessing-game/requirements.md) - Formal requirements document
+- [Technical Design](../.kiro/specs/multiplayer-prompt-guessing-game/design.md) - System architecture and implementation
+- [Game Architecture](../.kiro/specs/game-architecture.md) - Overall system design
+- [AI Integration Strategy](../.kiro/specs/ai-integration-strategy.md) - AI provider integration
+
 ### Getting Started
 - [Setup Providers](setup/SETUP_PROVIDERS.md) - AI provider configuration
 - [Analytics Setup](setup/ANALYTICS_SETUP.md) - Analytics configuration
@@ -22,5 +28,6 @@ This directory contains all project documentation organized by category.
 - [Cheap AI Setup](setup/CHEAP_AI_SETUP.md) - Cost-effective AI configuration
 
 ### Development
+- [API Documentation](development/API_DOCUMENTATION.md) - Complete Socket.io and REST API reference
 - [Changes Log](development/Changes.md) - Development changelog
 - [Contributing Guide](../CONTRIBUTING.md) - How to contribute to the project
