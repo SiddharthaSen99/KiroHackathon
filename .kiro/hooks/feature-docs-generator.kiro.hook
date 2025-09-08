@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Feature Documentation Generator",
+  "description": "Automatically generates and updates documentation when core game features are modified in components or server directories",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "client/src/components/*.js",
+      "server/*.js",
+      "client/src/utils/*.js",
+      "*.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A file has been modified in the AI Prompt Guesser Game project. Please analyze the changes and update documentation accordingly:\n\n1. **Component Documentation** (if React components changed):\n   - Analyze React component props and state\n   - Generate JSDoc comments for complex functions\n   - Document component lifecycle and effects\n   - Create usage examples for reusable components\n\n2. **API Documentation** (if server files changed):\n   - Document Socket.io events and their payloads\n   - Generate API endpoint documentation\n   - Update request/response examples\n   - Document error handling patterns\n\n3. **Game Logic Documentation**:\n   - Explain scoring algorithms and formulas\n   - Document game state transitions\n   - Create flow diagrams for complex interactions\n   - Update rule explanations\n\n4. **Integration Documentation**:\n   - Document AI provider integrations (Together.ai, Fal.ai, Replicate)\n   - Explain fallback mechanisms\n   - Update cost optimization strategies\n   - Document analytics tracking\n\n5. **User Guide Updates**:\n   - Update gameplay instructions\n   - Refresh troubleshooting guides\n   - Update FAQ based on new features\n   - Generate changelog entries\n\nPlease update the following files as needed:\n- README.md (feature descriptions)\n- docs/REPOSITORY_STRUCTURE.md (if structure changed)\n- Inline code documentation (JSDoc comments)\n- Component usage examples\n- API documentation files\n- Changelog entries for significant changes\n\nFocus on maintaining accuracy, clarity, and consistency across all documentation."
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "enabled": true,
+  "name": "Code Quality Check",
+  "description": "Automatically reviews code changes for quality, style compliance, security issues, and best practices when JavaScript, React, or configuration files are modified",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.json",
+      "**/*.md",
+      "**/*.css",
+      "**/*.env*",
+      "**/package*.json"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Please review the modified files for code quality issues. Check for:\n\n1. **Code Style & Standards**: Adherence to JavaScript/React best practices, proper naming conventions, consistent formatting\n2. **Security Issues**: API key exposure, input validation, XSS vulnerabilities, proper error handling\n3. **Performance**: React optimization opportunities, unnecessary re-renders, memory leaks, bundle size impact\n4. **Game Balance**: If game logic is modified, ensure scoring fairness and user experience\n5. **AI Integration**: Proper error handling for API calls, cost optimization, rate limiting\n6. **Architecture**: Component structure, separation of concerns, maintainability\n\nFocus on actionable feedback that improves code quality, security, and maintainability. Highlight any critical issues that need immediate attention."
+  }
+}
