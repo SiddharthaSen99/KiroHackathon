@@ -84,7 +84,9 @@ server/
 ├── specs/                             # Project specifications
 │   ├── game-architecture.md          # System architecture
 │   ├── ai-integration-strategy.md    # AI integration details
-│   └── kiro-integration-showcase.md  # Kiro features showcase
+│   ├── kiro-integration-showcase.md  # Kiro features showcase
+│   └── multiplayer-prompt-guessing-game/  # Game requirements
+│       └── requirements.md           # Formal requirements document
 ├── hooks/                             # Development hooks
 │   ├── code-quality-check.md         # Code quality automation
 │   ├── deployment-prep.md            # Deployment preparation
